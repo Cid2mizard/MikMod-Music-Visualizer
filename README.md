@@ -6,6 +6,7 @@ Copy only the tracks from the module to the /Music directory placed at the root 
 
 Supported formats :
 	Extension and file type
+	
 	669 	Composer 669, Unis 669
 	AMF 	DSMI Advanced Module Format
 	AMF 	ASYLUM Music Format V1.0
@@ -27,6 +28,7 @@ Supported formats :
 	XM 	FastTracker 2 
 
 Controls :
+
 		- D-Pad : Choose music.
 		- L / R : Scale.
 		- A : Play.
@@ -35,10 +37,12 @@ Controls :
 		- Plus : Exit app.
 
 Changelog :
+
 v1.0
 	- Initial Release.
 
 Thanks :
+
 	- Kukulcan.
 	- devkitpro and switchbrew.
 	- https://modarchive.org/.
