@@ -45,6 +45,7 @@ Thanks :
 
 	- Kukulcan.
 	- devkitpro and switchbrew.
+	- http://mikmod.sourceforge.net/ for MikMod.
 	- https://modarchive.org/.
 	- https://www.dafont.com/fr/rounded-elegance.font by Genumano.
 	- http://gbatemp.net/ for Forum Homebrew community.
