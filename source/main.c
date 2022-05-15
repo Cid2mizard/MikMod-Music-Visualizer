@@ -24,29 +24,6 @@ channeltype vumetreCol[32];
 bool explorer = true;
 bool visualizer = false;
 
-
-
-char *ext [] = {
-	"AMF", //OK
-	"APUN",
-	"DSM", //OK
-	"FAR", //OK
-	"GDM", //OK
-	"IMF", //OK
-	"IT", //OK
-	"MED", //OK
-	"MOD", //OK
-	"MPTM", //OK
-	"MTM", //OK
-	"OKT", //OK
-	"S3M", //OK
-	"STM", //OK
-	"STX",
-	"ULT", //OK
-	"UNI", //BUG
-	"XM" //OK
-};
-
 BOOL canal [32] = {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -103,18 +80,35 @@ u32 MAX = 99000;
 
 typedef struct{
 	char filename[100];
-	char name[100];
 	char ext[10];
-	int size;
 }	filetype;
 
-filetype files[1782];
+filetype files[1782], mikmod[19];
 
 PadState pad;
 
-
 int compterFichier(DIR* dir)
 {
+	strcpy(mikmod[0].ext, "669");
+	strcpy(mikmod[1].ext, "AMF");
+	strcpy(mikmod[2].ext, "APUN");
+	strcpy(mikmod[3].ext, "DSM");
+	strcpy(mikmod[4].ext, "FAR");
+	strcpy(mikmod[5].ext, "GDM");
+	strcpy(mikmod[6].ext, "IMF");
+	strcpy(mikmod[7].ext, "IT");
+	strcpy(mikmod[8].ext, "MED");
+	strcpy(mikmod[9].ext, "MOD");
+	strcpy(mikmod[10].ext, "MPTM");
+	strcpy(mikmod[11].ext, "MTM");
+	strcpy(mikmod[12].ext, "OKT");
+	strcpy(mikmod[13].ext, "S3M");
+	strcpy(mikmod[14].ext, "STM");
+	strcpy(mikmod[15].ext, "STX");
+	strcpy(mikmod[16].ext, "ULT");
+	strcpy(mikmod[17].ext, "UNI");
+	strcpy(mikmod[18].ext, "XM");
+
 	int nbr = 0;
 	struct dirent* ent = NULL;
 
@@ -124,7 +118,22 @@ int compterFichier(DIR* dir)
 		{
 			memset(files[nbr].filename, '\0', sizeof(files[nbr].filename));
 			strcpy(files[nbr].filename, ent->d_name);
-			nbr++;
+
+			char * pch;
+			pch = strrchr(files[nbr].filename,'.') + 1;
+
+			bool compatible = false;
+			int j;
+			for (j = 0; j < 19; j++)
+			{
+				if (strcmp(mikmod[j].ext, strupr(pch)) == 0)
+				{
+					compatible = true;
+				}
+			}
+
+			if (compatible == true)
+				nbr++;
 		}
 	}
 
@@ -164,7 +173,6 @@ void manipulation_fichier(u32 fichier_choix)
 	LectureEnCours = 1;
 }
 
-
 void SDL_DrawText(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Color colour, const char *text)
 {
 	SDL_Surface *surface = TTF_RenderText_Solid(font, text, colour);
@@ -180,7 +188,6 @@ void SDL_DrawText(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Colo
 	SDL_DestroyTexture(texture);
 }
 
-
 void SDL_DrawTextf(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Color colour, const char* text, ...)
 {
 	char buffer[256];
@@ -190,7 +197,6 @@ void SDL_DrawTextf(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Col
 	SDL_DrawText(renderer, font, x, y, colour, buffer);
 	va_end(args);
 }
-
 
 void affichage_liste_fichier()
 {
@@ -264,7 +270,6 @@ int SDL_RenderDrawCircle(SDL_Renderer * renderer, int x, int y, int radius)
 	return status;
 }
 
-
 int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius)
 {
 	int offsetx, offsety, d;
@@ -311,7 +316,7 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius)
 
 void aff_explorer()
 {
-	SDL_DrawTextf(grenderer, ttfont, 50, 40, WHITE, "MikMod Music Visualizer v1.0");
+	SDL_DrawTextf(grenderer, ttfont, 50, 40, WHITE, "MikMod Music Visualizer v1.1");
 	SDL_DrawTextf(grenderer, ttfont, 1020, 40, WHITE, "MikMod v%d.%d.%d",LIBMIKMOD_VERSION_MAJOR,LIBMIKMOD_VERSION_MINOR,LIBMIKMOD_REVISION);
 
 	int f;
@@ -343,7 +348,6 @@ void aff_explorer()
 	}
 }
 
-
 void aff_vumetre(u8 colonnes, u8 canal)
 {
 	u32 valeur;
@@ -360,18 +364,18 @@ void aff_vumetre(u8 colonnes, u8 canal)
 	u32 TRANCHE = (MAX-MIN);
 	u8 i = 0;
 
-	//echelle actuelle (MIN à MAX)
+	//echelle actuelle (MIN Ã  MAX)
 	if (valeur < MIN) {valeur = MIN;}
 	else if (valeur > MAX) {valeur = MAX;}
 
-	//commencer à zéro la tranche
+	//commencer Ã  zÃ©ro la tranche
 	valeur -= MIN;
 
-	//changement d'échelle (0 a 48) pour la gestion en TILES
+	//changement d'Ã©chelle (0 a 48) pour la gestion en TILES
 	u8 new_valeur = ceil (  (valeur*48)  / TRANCHE);
 	//u8 new_valeur = colonnes;
 
-	//notre vumétre en 12 morceaux
+	//notre vumÃ©tre en 12 morceaux
 	u8 MesTiles[12] = {4,4,4,4,4,4,4,4,4,4,4,4};
 
 	u8 Morceaux_plein = new_valeur / 4;
@@ -411,7 +415,7 @@ void aff_vumetre(u8 colonnes, u8 canal)
 	SDL_RenderDrawRect(grenderer, &rect);
 
 	//afficher
-	//vert foncé - 3 de haut
+	//vert foncÃ© - 3 de haut
 	renderTexture(grenderer, tiles.texture, 0, MesTiles[0]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	renderTexture(grenderer, tiles.texture, 0, MesTiles[1]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 1*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	renderTexture(grenderer, tiles.texture, 0, MesTiles[2]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 2*TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -423,7 +427,7 @@ void aff_vumetre(u8 colonnes, u8 canal)
 	//orange pale - 2 de haut
 	renderTexture(grenderer, tiles.texture, 96, MesTiles[6]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 6*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	renderTexture(grenderer, tiles.texture, 96, MesTiles[7]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 7*TILE_SIZE, TILE_SIZE, TILE_SIZE);
-	//orange foncé - 2 de haut
+	//orange foncÃ© - 2 de haut
 	renderTexture(grenderer, tiles.texture, 128, MesTiles[8]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 8*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	renderTexture(grenderer, tiles.texture, 128, MesTiles[9]*TILE_SIZE, SCREEN_WIDTH/2 - nbrcanaux*TILE_SIZE/2 + colonnes*TILE_SIZE, POSBAS - TILE_SIZE - 9*TILE_SIZE, TILE_SIZE, TILE_SIZE);
 	//rouge - 2 de haut
@@ -442,7 +446,6 @@ void aff_vumetre(u8 colonnes, u8 canal)
 		Player_Stop();
 	}
 }
-
 
 void manageInput()
 {
@@ -500,7 +503,7 @@ void manageInput()
 
 		if (fichier_choix < fichier_fin)
 		{
-			//info pour le changement de page et retrouver la bonne sélection
+			//info pour le changement de page et retrouver la bonne sÃ©lection
 			page_courante_sel = page_courante;
 			ligne_courante_sel = position_choix;
 			explorer = false;
@@ -530,11 +533,8 @@ void manageInput()
 	}
 }
 
-
-
 int main(int argc, char **argv)
 {
-
 	padConfigureInput(1, HidNpadStyleSet_NpadStandard);
 	//PadState pad;
 	padInitializeDefault(&pad);
@@ -577,7 +577,7 @@ int main(int argc, char **argv)
 	affichage_liste_fichier();
 
 	//navigateur bas, si > 18 fichiers ?
-	//créer le module de navigation ?
+	//crÃ©er le module de navigation ?
 	navigateur = 0;
 
 	if (FileNumber > 18)
@@ -599,7 +599,7 @@ int main(int argc, char **argv)
 	{
 		manageInput();
 
-		//Le Fond coloré
+		//Le Fond colorÃ©
 		SDL_SetRenderDrawColor(grenderer, 45, 45, 45, 255);
 
 		//CLEAR
