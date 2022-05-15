@@ -1,4 +1,4 @@
-# MikMod Music Visualizer v1.0 By Cid2mizard (2022)
+# MikMod Music Visualizer v1.1 By Cid2mizard (2022)
 
 "MikMod Music Visualizer" This is a player module track with simple visualizer for nintendo Switch which plays mostly tracked and classic formats such as .mod .xm .it .669 and .mtm. 
 
@@ -37,6 +37,9 @@ Controls :
 		- Plus : Exit app.
 
 Changelog :
+
+v1.1
+	- Only compatible extension files are list.
 
 v1.0
 	- Initial Release.
