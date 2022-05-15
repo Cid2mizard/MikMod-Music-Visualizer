@@ -46,7 +46,7 @@ ROMFS		:=	romfs
 
 APP_TITLE	:=	MikMod Music Visualizer
 APP_AUTHOR	:=	Cid2mizard
-APP_VERSION	:=	1.0
+APP_VERSION	:=	1.1
 ICON 		:=	romfs/resources/icon.jpg
 
 #---------------------------------------------------------------------------------
