@@ -175,7 +175,7 @@ void manipulation_fichier(u32 fichier_choix)
 
 void SDL_DrawText(SDL_Renderer *renderer, TTF_Font *font, int x, int y, SDL_Color colour, const char *text)
 {
-	SDL_Surface *surface = TTF_RenderText_Solid(font, text, colour);
+	SDL_Surface *surface = TTF_RenderText_Blended(font, text, colour);
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
 
