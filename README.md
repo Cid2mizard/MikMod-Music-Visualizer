@@ -38,6 +38,9 @@ Controls :
 
 Changelog :
 
+v1.2
+	- Change TTF_RenderText_Solid to TTF_RenderText_Blended.
+
 v1.1
 	- Only compatible extension files are list.
 
