@@ -80,35 +80,35 @@ u32 MAX = 99000;
 
 typedef struct{
 	char filename[100];
-	char ext[10];
 }	filetype;
+filetype files[1782];
 
-filetype files[1782], mikmod[19];
+char * ext[] =
+{
+	"669",
+	"AMF",
+	"APUN",
+	"DSM",
+	"FAR",
+	"GDM",
+	"IMF",
+	"IT",
+	"MED",
+	"MOD",
+	"MPTM",
+	"MTM",
+	"OKT",
+	"S3M",
+	"STM",
+	"STX",
+	"ULT",
+	"UNI",
+	"XM"};
 
 PadState pad;
 
 int compterFichier(DIR* dir)
 {
-	strcpy(mikmod[0].ext, "669");
-	strcpy(mikmod[1].ext, "AMF");
-	strcpy(mikmod[2].ext, "APUN");
-	strcpy(mikmod[3].ext, "DSM");
-	strcpy(mikmod[4].ext, "FAR");
-	strcpy(mikmod[5].ext, "GDM");
-	strcpy(mikmod[6].ext, "IMF");
-	strcpy(mikmod[7].ext, "IT");
-	strcpy(mikmod[8].ext, "MED");
-	strcpy(mikmod[9].ext, "MOD");
-	strcpy(mikmod[10].ext, "MPTM");
-	strcpy(mikmod[11].ext, "MTM");
-	strcpy(mikmod[12].ext, "OKT");
-	strcpy(mikmod[13].ext, "S3M");
-	strcpy(mikmod[14].ext, "STM");
-	strcpy(mikmod[15].ext, "STX");
-	strcpy(mikmod[16].ext, "ULT");
-	strcpy(mikmod[17].ext, "UNI");
-	strcpy(mikmod[18].ext, "XM");
-
 	int nbr = 0;
 	struct dirent* ent = NULL;
 
@@ -126,7 +126,7 @@ int compterFichier(DIR* dir)
 			int j;
 			for (j = 0; j < 19; j++)
 			{
-				if (strcmp(mikmod[j].ext, strupr(pch)) == 0)
+				if (strcmp(ext[j], strupr(pch)) == 0)
 				{
 					compatible = true;
 				}
@@ -316,7 +316,7 @@ int SDL_RenderFillCircle(SDL_Renderer * renderer, int x, int y, int radius)
 
 void aff_explorer()
 {
-	SDL_DrawTextf(grenderer, ttfont, 50, 40, WHITE, "MikMod Music Visualizer v1.1");
+	SDL_DrawTextf(grenderer, ttfont, 50, 40, WHITE, "MikMod Music Visualizer v1.2.1");
 	SDL_DrawTextf(grenderer, ttfont, 1020, 40, WHITE, "MikMod v%d.%d.%d",LIBMIKMOD_VERSION_MAJOR,LIBMIKMOD_VERSION_MINOR,LIBMIKMOD_REVISION);
 
 	int f;
