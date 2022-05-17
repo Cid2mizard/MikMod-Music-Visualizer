@@ -38,16 +38,16 @@ Controls :
 
 Changelog :
 
-v1.2.1
+	v1.2.1
 	- Fix ext declaration.
 
-v1.2
+	v1.2
 	- Change TTF_RenderText_Solid to TTF_RenderText_Blended.
 
-v1.1
+	v1.1
 	- Only compatible extension files are list.
 
-v1.0
+	v1.0
 	- Initial Release.
 
 Thanks :
